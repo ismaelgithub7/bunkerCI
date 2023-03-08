@@ -10,13 +10,13 @@ pipeline {
 
     stage('git-aggregate') {
       steps {
-        sh 'invoke start'
+        sh 'docker-compose up -d'
       }
     }
 
     stage('') {
       steps {
-        sh 'invoke stop'
+        sleep 10
       }
     }
 
