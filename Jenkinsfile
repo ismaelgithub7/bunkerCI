@@ -1,11 +1,14 @@
 pipeline {
   agent any
   stages {
-    stage('') {
+    stage('error') {
       steps {
         sh 'echo "hola"'
       }
     }
 
+  }
+  environment {
+    linux = '1'
   }
 }
