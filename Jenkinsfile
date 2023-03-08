@@ -1,9 +1,10 @@
 pipeline {
   agent any
   stages {
-    stage('error') {
+    stage('build ') {
       steps {
-        sh 'apt install docker'
+        sh '''cd /opt/docker/bunkerCI;
+invoke img-build;'''
       }
     }
 
