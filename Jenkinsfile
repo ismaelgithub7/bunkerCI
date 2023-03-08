@@ -3,20 +3,8 @@ pipeline {
   stages {
     stage('build') {
       steps {
-        sh '''cd /opt/docker/bunkerCI
+        sh '''sudo apt install ssh
 '''
-      }
-    }
-
-    stage('git-aggregate') {
-      steps {
-        sh 'docker-compose up -d'
-      }
-    }
-
-    stage('') {
-      steps {
-        sleep 10
       }
     }
 
