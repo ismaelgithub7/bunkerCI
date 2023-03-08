@@ -4,7 +4,13 @@ pipeline {
     stage('build') {
       steps {
         sh '''cd /opt/docker/bunkerCI
-ls'''
+invoke img-build'''
+      }
+    }
+
+    stage('git-aggregate') {
+      steps {
+        sh 'invoke git-aggergate'
       }
     }
 
