@@ -4,7 +4,7 @@ pipeline {
     stage('build') {
       steps {
         sh '''cd /opt/docker/bunkerCI
-invoke img-build'''
+ls'''
       }
     }
 
