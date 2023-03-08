@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- product.customer views-->
+    <record id="product_customer_tree" model="ir.ui.view">
+        <field name="name">product.customer.tree</field>
+        <field name="model">product.customer</field>
+        <field name="arch" type="xml">
+            <tree editable="top">
+                <field name="customer_id" domain="[('customer', '=', True), ('is_company', '=', True)]"/>
+                <field name="code"/>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="product_customer_form" model="ir.ui.view">
+        <field name="name">product.customer.form</field>
+        <field name="model">product.customer</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="customer_id" domain="[('customer', '=', True), ('is_company', '=', True)]"/>
+                    <field name="code"/>
+                    <field name="name"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- product.product views -->
+
+    <record id="product_template_add_customer_names_view" model="ir.ui.view">
+        <field name="name">product.add.customer.names</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <group name="sale" position="inside">
+                <field name="product_customer_ids"/>
+            </group>
+        </field>
+    </record>
+
+</odoo>

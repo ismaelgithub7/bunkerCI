@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <template id="report_packing_document">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)" />
+                <t t-set="partner" t-value="o.partner_id or (o.move_lines and o.move_lines[0].partner_id) or False"/>
+                <t t-set="title">
+                    <h2>
+                        PACKING LIST
+                    </h2>
+                </t>
+                <t t-if="partner" name="partner_header">
+                    <t t-set="address">
+                        <span t-field="partner.commercial_partner_id.name"/>
+                        <div t-esc="partner"
+                        t-options='{"widget": "contact", "fields": ["address", "phone"], "no_marker": True}'/>
+                   </t>
+                </t>
+                <div class="page">
+                    <div class="row">
+                        <div class="col-3">
+                            <strong>Date</strong>
+                            <!--p t-esc="o.min_date.strftime('%d/%m/%Y')"/-->
+                        </div>
+                        <div class="col-3">
+                            <strong>Your Reference.</strong>
+                        </div>
+                        <div class="col-3">
+                            <strong>Origins of goods</strong>
+                        </div>
+                        <div class="col-3">
+                            <strong>Type of goods</strong>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-3">
+                            <p t-field="o.scheduled_date" t-options='{"widget": "date"}'/>
+                        </div>
+                        <div class="col-3">
+                            <p t-field="o.sale_id.client_order_ref"/>
+                        </div>
+                        <div class="col-3">
+                            <p t-field="o.company_id.country_id.name"/>
+                        </div>
+                        <div class="col-3">
+                            <p>Security material</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Description</th>
+                                        <th>Boxes</th>
+                                        <th>Quantity</th>
+                                        <th>G.W. per box(KG)</th>
+                                        <th>Size(cm.)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- operations = {1:[[{}]]}-->
+                                    <t t-foreach="data['lines'][o.id]" t-as="line">
+                                        <tr>
+                                            <td><span t-esc="line['prod']"/></td>
+                                            <t t-if="line['boxes'] is not None">
+                                                <td t-att-rowspan="line['span']"><span t-esc="line['boxes']"/></td>
+                                            </t>
+                                            <td><span t-esc="line['qty']"/></td>
+                                            <t t-if="line['weight'] is not None">
+                                                <td t-att-rowspan="line['span']"><span t-esc="line['weight']"/></td>
+                                            </t>
+                                            <t t-if="line['size'] is not None">
+                                                <td t-att-rowspan="line['span']"><span t-esc="line['size']"/></td>
+                                            </t>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td>Total</td>
+                                        <td><t t-esc="int(data['totals'][o.id]['boxes'])"/></td>
+                                        <td><t t-esc="data['totals'][o.id]['qty']"/></td>
+                                        <td><t t-esc="data['totals'][o.id]['weight']"/></td>
+                                        <td></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="row"  t-if="not o.partner_id.country_id.not_show_type_message">
+                        <div class="col-12">
+                            <p>The exporter of the products covered by this document (custom authorization) ES/62/8517/12 declares that except where otherwise clearly indicated these products are of Spanish preferential origin.</p>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_packing">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="custom_documents.report_packing_document" t-lang="o.partner_id.lang"/>
+        </t>
+    </template>
+
+</odoo>
+

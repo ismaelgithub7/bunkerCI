@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="invoice_group_journal_search" model="ir.ui.view">
+            <field name="name">invoice.group.journal.search</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+            <field name="arch" type="xml">
+                <filter name="status" position="after">
+                    <filter string="Diario" name="journal" context="{'group_by': 'journal_id'}" />
+                    <filter string="Agent" name="agent" context="{'group_by': 'line_agent_id'}"/>
+                </filter>
+            </field>
+        </record>
+
+        <record id="invoice_form_add_agent" model="ir.ui.view">
+            <field name="name">account.invoice.form.add_agent</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <field name="move_id" position="after">
+                    <field name="line_agent_id"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="account_invoice_tree_add_reference" model="ir.ui.view">
+            <field name="name">account.invoice.tree</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_tree"/>
+            <field name="arch" type="xml">
+                <field name="number" position="after">
+                    <field name="sale_ref"/>
+                    <field name="reference"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="account_invoice_line_view_search" model="ir.ui.view">
+            <field name="name">account.invoice.line.search</field>
+            <field name="model">account.invoice.line</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="product_id"/>
+                    <field name="invoice_type"/>
+                    <field name="journal_id"/>
+                    <field name="name"/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_by_invoice_type" string="Invoice type" context="{'group_by':'invoice_type'}"/>
+                        <filter name="group_by_invoice_date" string="Invoice date" context="{'group_by':'invoice_date'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+
+        <record id="account_invoice_line_action" model="ir.actions.act_window">
+            <field name="name">Invoice lines</field>
+            <field name="res_model">account.invoice.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="account.view_invoice_line_tree"/>
+            <field name="search_view_id" ref="account_invoice_line_view_search"/>
+        </record>
+
+        <menuitem name="Invoice lines" sequence="100" parent="account.menu_finance_receivables" action="account_invoice_line_action" id="menu_account_invoice_line"/>
+
+</odoo>

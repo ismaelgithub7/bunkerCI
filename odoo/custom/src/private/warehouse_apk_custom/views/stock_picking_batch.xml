@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="stock_picking_batch_tree">
+         <field name="name">stock.picking.batch.tree.wac</field>
+            <field name="model">stock.picking.batch</field>
+            <field name="inherit_id" ref="stock_picking_batch_extended.stock_batch_picking_tree"/>
+            <field name="arch" type="xml">
+                <field name="state" position="after">
+                    <field name="total_reserved_availability"/>
+                    <field name="total_qty_done"/>
+                </field>
+            </field>
+    </record>
+
+     <record model="ir.ui.view" id="stock_batch_picking_form_apk">
+            <field name="name">stock.picking.batch.form.apk</field>
+            <field name="model">stock.picking.batch</field>
+            <field name="inherit_id" ref="stock_picking_batch_extended.stock_batch_picking_form"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//field[@name='use_oca_batch_validation']/.." position="after">
+                     <group>
+                         <field name="picking_type_id" readonly="1"/>
+                         <field name="partner_id" readonly="1"/>
+                         <field name="try_validate" attributes="{'invisible': [('try_validate','=',True)]}"/>
+                         <!--field name="pick_state" widget="statusbar" statusbar_visible="assigned,done"/-->
+                         <field name="team_id"/>
+                     </group>
+                 </xpath>
+                <xpath expr="//field[@name='move_lines']/tree/field[@name='state']" position="after">
+                    <field name="wh_location" string="Ubicación"/>
+                    <field name="apk_order" string="Orden"/>
+                    <!--field name="try_validate" string="Validado desde PDA"/-->
+                </xpath>
+                <xpath expr="//field[@name='move_lines']/tree/field[@name='state']" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                </xpath>
+            </field>
+    </record>
+
+
+</odoo>

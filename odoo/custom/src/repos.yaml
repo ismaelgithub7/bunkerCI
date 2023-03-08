@@ -1,0 +1,56 @@
+# See https://github.com/Tecnativa/doodba#optodoocustomsrcreposyaml
+./odoo:
+  defaults:
+    # Shallow repositories ($DEPTH_DEFAULT=1) are faster & thinner
+    # You may need a bigger depth when merging PRs (use $DEPTH_MERGE
+    # for a sane value of 100 commits)
+    depth: $DEPTH_DEFAULT
+  remotes:
+    ocb: https://github.com/OCA/OCB.git
+    odoo: https://github.com/odoo/odoo.git
+    openupgrade: https://github.com/OCA/OpenUpgrade.git
+  target: ocb $ODOO_VERSION
+  merges:
+    - ocb $ODOO_VERSION
+    # Example of a merge of the PR with the number <PR>
+    # - oca refs/pull/<PR>/head
+
+external_modules:
+  defaults:
+    depth: $DEPTH_MERGE
+  remotes:
+    origin: https://github.com/Comunitea/external_modules.git
+  target: origin $ODOO_VERSION
+  merges:
+  - origin $ODOO_VERSION
+
+  account-invoicing:
+  defaults:
+    depth: 200
+  remotes:
+    origin: https://github.com/OCA/account-invoicing.git
+  target: origin $ODOO_VERSION
+  merges:
+  - origin $ODOO_VERSION
+  - origin pull/526/head
+
+credit-control:
+  defaults:
+    depth: 200
+  remotes:
+    origin: https://github.com/OCA/credit-control.git
+  target: origin $ODOO_VERSION
+  merges:
+  - origin $ODOO_VERSION
+  - origin pull/31/head
+
+l10n-spain:
+  defaults:
+    depth: 200
+  remotes:
+    origin: https://github.com/OCA/l10n-spain.git
+  target: origin $ODOO_VERSION
+  merges:
+  - origin $ODOO_VERSION
+  - origin pull/1309/head
+  - origin pull/2012/head

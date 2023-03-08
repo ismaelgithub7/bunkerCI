@@ -1,0 +1,208 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#       * bu_custom
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-01-20 12:43+0000\n"
+"PO-Revision-Date: 2021-01-20 12:43+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: bu_custom
+#: model:ir.model.fields,field_description:bu_custom.field_account_invoice__line_agent_id
+#: model_terms:ir.ui.view,arch_db:bu_custom.invoice_group_journal_search
+msgid "Agent"
+msgstr "Agente"
+
+#. module: bu_custom
+#: model_terms:ir.ui.view,arch_db:bu_custom.move_receipt_picking_calendar
+msgid "Calendar View"
+msgstr "Vista calendario"
+
+#. module: bu_custom
+#: model_terms:ir.ui.view,arch_db:bu_custom.recompute_price_from_bom_form_view
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: bu_custom
+#: model:ir.model.fields,field_description:bu_custom.field_recompute_price_from_bom__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: bu_custom
+#: model:ir.model.fields,field_description:bu_custom.field_recompute_price_from_bom__create_date
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: bu_custom
+#: model:ir.model.fields,field_description:bu_custom.field_stock_picking__currency
+#: model_terms:ir.ui.view,arch_db:bu_custom.stock_search_currency
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: bu_custom
+#: model_terms:ir.ui.view,arch_db:bu_custom.invoice_group_journal_search
+msgid "Diario"
+msgstr ""
+
+#. module: bu_custom
+#: model:ir.model.fields,field_description:bu_custom.field_recompute_price_from_bom__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: bu_custom
+#: model_terms:ir.ui.view,arch_db:bu_custom.account_invoice_line_view_search
+msgid "Group By"
+msgstr "Agrupar por"
+
+#. module: bu_custom
+#: model:ir.model.fields,field_description:bu_custom.field_recompute_price_from_bom__id
+msgid "ID"
+msgstr ""
+
+#. module: bu_custom
+#: model:ir.model,name:bu_custom.model_account_invoice
+#: model:ir.model.fields,field_description:bu_custom.field_account_invoice_report_invoice_id
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: bu_custom
+#: model:ir.model.fields,field_description:bu_custom.field_account_invoice_line__invoice_date
+msgid "Invoice Date"
+msgstr "Fecha factura"
+
+#. module: bu_custom
+#: model_terms:ir.ui.view,arch_db:bu_custom.account_invoice_line_view_search
+msgid "Invoice date"
+msgstr "Fecha de factura"
+
+#. module: bu_custom
+#: model:ir.actions.act_window,name:bu_custom.account_invoice_line_action
+#: model:ir.ui.menu,name:bu_custom.menu_account_invoice_line
+msgid "Invoice lines"
+msgstr "Lineas de factura"
+
+#. module: bu_custom
+#: model_terms:ir.ui.view,arch_db:bu_custom.account_invoice_line_view_search
+msgid "Invoice type"
+msgstr "Tipo de factura"
+
+#. module: bu_custom
+#: model:ir.model.fields,field_description:bu_custom.field_product_product__is_pack
+msgid "Is pack"
+msgstr "Es pack"
+
+#. module: bu_custom
+#: model:ir.model.fields,field_description:bu_custom.field_account_invoice_line__journal_id
+msgid "Journal"
+msgstr "Diario del banco"
+
+#. module: bu_custom
+#: model:ir.model.fields,help:bu_custom.field_account_invoice_line__invoice_date
+msgid "Keep empty to use the current date"
+msgstr "Dejarlo vacío para utilizar la fecha actual."
+
+#. module: bu_custom
+#: model:ir.model.fields,field_description:bu_custom.field_recompute_price_from_bom____last_update
+msgid "Last Modified on"
+msgstr "Modificado por última vez el"
+
+#. module: bu_custom
+#: model:ir.model.fields,field_description:bu_custom.field_recompute_price_from_bom__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: bu_custom
+#: model:ir.model.fields,field_description:bu_custom.field_recompute_price_from_bom__write_date
+msgid "Last Updated on"
+msgstr "Última actualización en"
+
+#. module: bu_custom
+#: model:ir.model.fields,field_description:bu_custom.field_product_product__manual_minimum_stock
+#: model:ir.model.fields,field_description:bu_custom.field_product_template__manual_minimum_stock
+msgid "Manual minimum stock"
+msgstr "Stock mínimo manual"
+
+#. module: bu_custom
+#: model:ir.model.fields,field_description:bu_custom.field_product_product__miami
+#: model:ir.model.fields,field_description:bu_custom.field_product_template__miami
+#: model_terms:ir.ui.view,arch_db:bu_custom.product_template_search_view
+msgid "Miami"
+msgstr ""
+
+#. module: bu_custom
+#: model:ir.model.fields,field_description:bu_custom.field_product_product__reordering_min_qty
+#: model:ir.model.fields,field_description:bu_custom.field_product_template__reordering_min_qty
+msgid "Min. qty for purchase"
+msgstr "Cant. mínima para compras"
+
+#. module: bu_custom
+#: model_terms:ir.ui.view,arch_db:bu_custom.view_stock_product_template_tree
+#: model_terms:ir.ui.view,arch_db:bu_custom.view_stock_product_tree
+msgid "Min. qty."
+msgstr "Cant. min."
+
+#. module: bu_custom
+#: model:ir.model.fields,field_description:bu_custom.field_account_invoice_line_origin_line_ids
+msgid "Original invoice line"
+msgstr "Línea de la factura original"
+
+#. module: bu_custom
+#: model:ir.model.fields,help:bu_custom.field_account_invoice_line_origin_line_ids
+msgid "Original invoice line to which this refund invoice line is referred to"
+msgstr "Línea de la factura original a la que está línea de factura rectificativa se refiere"
+
+#. module: bu_custom
+#: model:ir.model.fields,field_description:bu_custom.field_stock_picking__partner_id
+msgid "Partner"
+msgstr "Empresa"
+
+#. module: bu_custom
+#: model_terms:ir.ui.view,arch_db:bu_custom.recompute_price_from_bom_form_view
+msgid "Recompute"
+msgstr "Recalcular"
+
+#. module: bu_custom
+#: model:ir.actions.server,name:bu_custom.ir_cron_recompute_price_from_bom_ir_actions_server
+#: model:ir.cron,cron_name:bu_custom.ir_cron_recompute_price_from_bom
+#: model:ir.cron,name:bu_custom.ir_cron_recompute_price_from_bom
+msgid "Recompute Price From BoM"
+msgstr "Recalcular precio desde LdM"
+
+#. module: bu_custom
+#: model:ir.actions.act_window,name:bu_custom.action_recompute_price_from_bom
+#: model:ir.ui.menu,name:bu_custom.menu_mrp_routing_action
+msgid "Recompute Prices (BoM)"
+msgstr "Recalcular Precios (LdM)"
+
+#. module: bu_custom
+#: model:ir.model.fields,field_description:bu_custom.field_account_invoice_line_refund_line_ids
+msgid "Refund invoice line"
+msgstr "Línea de factura rectificativa"
+
+#. module: bu_custom
+#: model:ir.model.fields,help:bu_custom.field_account_invoice_line_refund_line_ids
+msgid "Refund invoice lines created from this invoice line"
+msgstr "Líneas de facturas rectificativas creadas desde esta línea de factura"
+
+#. module: bu_custom
+#: model:ir.model.fields,field_description:bu_custom.field_account_invoice__sale_ref
+msgid "Sale ref"
+msgstr "Ref. venta"
+
+#. module: bu_custom
+#: model:ir.model.fields,field_description:bu_custom.field_account_invoice_line__invoice_type
+msgid "Type"
+msgstr "Tipo"
+
+#. module: bu_custom
+#: model_terms:ir.ui.view,arch_db:bu_custom.recompute_price_from_bom_form_view
+msgid "or"
+msgstr "o"

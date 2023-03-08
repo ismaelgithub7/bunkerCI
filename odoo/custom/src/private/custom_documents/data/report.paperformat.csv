@@ -1,0 +1,7 @@
+id,name,page_height,page_width,header_spacing,report_ids/id,margin_right,margin_bottom,margin_left,margin_top,header_line,orientation,dpi,format,default
+"base.paperformat_euro","A4","0","0","75","","7.0","23.0","7.0","80.0","False","Portrait","90","A4 0 210 x 297 mm, 8,26 x 11,69 pulgadas","True"
+"__export__.report_paperformat_17_c28c5638","A4 Factura y Pedido","0","0","75","sale.action_report_pro_forma_invoice","7.0","65.0","7.0","80.0","False","Portrait","90","A4 0 210 x 297 mm, 8,26 x 11,69 pulgadas","True"
+"","","","","","account.account_invoices","","","","","","","","",""
+"","","","","","account.account_invoices_without_payment","","","","","","","","",""
+"","","","","","sale.action_report_saleorder","","","","","","","","",""
+"__export__.report_paperformat_18_70292e07","A4 Albarán interno","0","0","10","custom_documents.action_report_internal_picking","7.0","10.0","7.0","2.0","False","Portrait","90","A4 0 210 x 297 mm, 8,26 x 11,69 pulgadas","True"

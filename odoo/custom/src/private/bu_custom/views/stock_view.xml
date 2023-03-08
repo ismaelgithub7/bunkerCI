@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record model="ir.ui.view" id="move_receipt_picking_calendar">
+            <field name="name">stock.move.calendar</field>
+            <field name="model">stock.move</field>
+            <field name="priority" eval="2"/>
+            <field name="arch" type="xml">
+                <calendar string="Calendar View" date_start="date_expected" color="product_id">
+                    <field name="product_id"/>
+                    <field name="product_uom_qty"/>
+                </calendar>
+            </field>
+        </record>
+
+        <record id="stock.action_receipt_picking_move" model="ir.actions.act_window">
+            <field name="name">Incoming  Products</field>
+            <field name="res_model">stock.move</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="domain" eval="[('picking_id.picking_type_id.code','=','incoming'), ('location_id.usage','!=','internal'), ('location_dest_id.usage', '=', 'internal')]"/>
+            <field name="view_id" ref="stock.view_move_tree_receipt_picking"/>
+            <field name="calendar_view_id" ref="move_receipt_picking_calendar"/>
+            <field name="context">{'product_receive': True, 'search_default_future': True}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to register a product receipt.
+              </p><p>
+                Here you can receive individual products, no matter what
+                purchase order or picking order they come from. You will find
+                the list of all products you are waiting for. Once you receive
+                an order, you can filter based on the name of the supplier or
+                the purchase order reference. Then you can confirm all products
+                received using the buttons on the right of each line.
+              </p>
+            </field>
+        </record>
+
+
+        <record id="stock_tree_currency" model="ir.ui.view">
+            <field name="name">stock.picking.currency.tree</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.vpicktree"/>
+            <field name="arch" type="xml">
+                <field name="origin" position="after">
+                    <field name="currency" />
+                </field>
+            </field>
+        </record>
+
+        <record id="stock_search_currency" model="ir.ui.view">
+            <field name="name">stock.picking.currency.search</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+            <field name="arch" type="xml">
+                <field name="product_id" position="after">
+                    <field name="currency" />
+                </field>
+                <filter name="origin" position="after">
+                    <filter string="Currency" name="currency" domain="[]" context="{'group_by':'currency'}"/>
+                </filter>
+            </field>
+
+        </record>
+
+        <record id="view_move_picking_tree_add_date" model="ir.ui.view">
+            <field name="name">stock.move.tree</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_picking_tree"/>
+            <field name="arch" type="xml">
+                <field name="state" position="before">
+                    <field name="date"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_picking_form_add_move_name" model="ir.ui.view">
+            <field name="name">stock.picking.form.add_move_name</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='move_ids_without_package']/tree/field[@name='product_id']" position="after">
+                    <field name="name"/>
+                </xpath>
+            </field>
+        </record>
+
+
+</odoo>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <report
+                string="Picking"
+                id="stock.action_report_delivery"
+                model="stock.picking"
+                report_type="qweb-pdf"
+                name="custom_documents.report_picking_"
+                file="custom_documents.report_picking_"
+        />
+
+        <report
+                string="Final client picking"
+                id="action_report_picking"
+                model="stock.picking"
+                report_type="qweb-pdf"
+                name="custom_documents.report_picking_final"
+                file="custom_documents.report_picking_final"
+        />
+
+        <report
+                string="Packing list"
+                id="action_report_packing"
+                model="stock.picking"
+                report_type="qweb-pdf"
+                name="custom_documents.report_packing"
+                file="custom_documents.report_packing"
+        />
+
+        <report
+                string="internal picking"
+                id="action_report_internal_picking"
+                model="stock.picking"
+                report_type="qweb-pdf"
+                name="custom_documents.report_internal_picking"
+                file="custom_documents.report_internal_picking"
+        />
+
+</odoo>

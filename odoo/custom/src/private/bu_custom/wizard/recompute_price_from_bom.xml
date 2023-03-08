@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="recompute_price_from_bom_form_view" model="ir.ui.view">
+            <field name="name">recompute.price.from.bom.form.view</field>
+            <field name="model">recompute.price.from.bom</field>
+            <field name="arch" type="xml">
+                <form>
+                    <footer>
+                        <button name="recompute_price_from_bom" string="Recompute" type="object" class="oe_highlight"/>
+                         or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_recompute_price_from_bom" model="ir.actions.act_window">
+            <field name="name">Recompute Prices (BoM)</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">recompute.price.from.bom</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{}</field>
+        </record>
+
+        <menuitem id="menu_mrp_routing_action"
+          string="Recompute Price From BoM"
+          action="action_recompute_price_from_bom"
+          parent="mrp.menu_mrp_bom"
+          sequence="6"/>
+
+</odoo>
+

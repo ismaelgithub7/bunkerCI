@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="res_country_add_invoice_data" model="ir.ui.view">
+            <field name="name">res.country.form</field>
+            <field name="model">res.country</field>
+            <field name="inherit_id" ref="base.view_country_form"/>
+            <field name="arch" type="xml">
+                <field name="code" position="after">
+                    <field name="invoice_report_with_shipping_address"/>
+                    <field name="invoice_report_with_validation_data"/>
+                    <field name="not_show_type_message"/>
+                    <field name="show_intrastat"/>
+                </field>
+            </field>
+        </record>
+
+</odoo>

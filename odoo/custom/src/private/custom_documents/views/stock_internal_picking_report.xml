@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+        <template id="report_internal_picking">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                    <style>
+                        .diff_row{
+                            padding-bottom: 30px;
+                        }
+                        .tittle{
+                            font-weight: bold;
+                            color: #666666;
+                        }
+
+                        .bordered{
+                            border: 1px solid black;
+                            border-collapse: collapse;
+                        }
+
+                        .input_line{
+                            border-bottom: 1px solid black;
+                            margin-top: 15px;
+                            padding-left: 20px;
+                        }
+                        .box{
+                            height:13px;
+                            width:13px;
+                            border: 1px solid black;
+                            margin-right:5px;
+                            display: inline-block;
+                        }
+                        .row_margin{
+                            margin-bottom:3px;
+                        }
+
+                        .pack_component{
+                            background-color: #D9DBDE
+                        }
+                    </style>
+                    <t t-foreach="docs" t-as="o">
+                        <div class="page" style="position: relative; height: 277mm; font-size: 13px;">
+                            <div class="row" style="border: 1px solid black;">
+                                <div class="col-7">
+                                    <div class="row">
+                                        <div class="col-12 tittle">
+                                            <strong>CLIENTE</strong>
+                                        </div>
+                                    </div>
+                                    <div class="row diff_row">
+                                        <div class="col-12">
+                                            <t t-if="o.partner_id">
+                                                <span t-esc="o.partner_id.name_get()[0][1]"/>
+                                            </t>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3 tittle">
+                                            C.P.
+                                        </div>
+                                        <div class="col-3 tittle">
+                                            POBLACION
+                                        </div>
+                                        <div class="col-3 tittle">
+                                            PROVINCIA
+                                        </div>
+                                        <div class="col-3 tittle">
+                                            PAIS
+                                        </div>
+                                    </div>
+
+                                    <div class="row diff_row">
+                                        <div class="col-3">
+                                            <span t-field="o.partner_id.zip"/>
+                                        </div>
+                                        <div class="col-3">
+                                            <span t-field="o.partner_id.city"/>
+                                        </div>
+                                        <div class="col-3">
+                                            <span t-field="o.partner_id.state_id.name"/>
+                                        </div>
+                                        <div class="col-3">
+                                            <span t-field="o.partner_id.country_id.name"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 tittle">DIRECCION DE ENVIO</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12"><span t-esc="(o.partner_id.street or '') + ' ' + (o.partner_id.street2 or '')"/></div>
+                                    </div>
+                                </div>
+                                <div class="col-5">
+                                    <div class="row">
+                                        <div class="col-12"><h2><center>PEDIDO ALMACÉN</center></h2></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 tittle">Número de pedido</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12"><h4><span t-field="o.sale_id.name"/></h4></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8 text-right tittle">FECHA</div>
+                                        <div class="col-4 text-left">
+                                            <t t-if="o.sale_id">
+                                                <span t-field="o.sale_id.date_order" t-options='{"widget": "date"}'/>
+                                            </t>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8 text-right tittle">Número de pedido de cliente</div>
+                                        <div class="col-4 text-left"><span t-field="o.sale_id.client_order_ref"/></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" style="padding-top:10px;">
+                                <table class="table table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th>Q.</th>
+                                            <th>TECH REF.</th>
+                                            <th>REF.</th>
+                                            <th style="border: 1px solid black">re</th>
+                                            <th style="border: 1px solid black">chk</th>
+                                            <th>DESCRIPCIÓN</th>
+                                            <th>DIMENSION (Pegatinas de)</th>
+                                            <th>PESO</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="data['moves'][o.id]" t-as="pack">
+                                            <!-- Se añade la linea de pack-->
+                                            <t t-if="pack[0]">
+                                                <tr class="pack_component">
+                                                    <td><span t-field="pack[0].product_uom_qty"/></td>
+                                                    <td><span t-esc="pack[0].product_id.tech_office_code"/></td>
+                                                    <td><span t-esc="pack[0].product_id.default_code"/></td>
+                                                    <td style="border: 1px solid black"></td>
+                                                    <td style="border: 1px solid black"></td>
+                                                    <td><span t-esc="pack[0].product_id.name"/></td>
+                                                    <td>
+                                                        <t t-if="pack[0].product_id.get_product_ref(pack[0].order_partner_id)[0] and pack[0].product_id.default_code != pack[0].product_id.get_product_ref(pack[0].order_partner_id)[0]">
+                                                            <span t-esc=" (pack[0].product_id.packaging_ids and pack[0].product_id.packaging_ids[0].measures_str or '') + '   (' + pack[0].product_id.get_product_ref(pack[0].order_partner_id)[0] + ')'"/>
+                                                        </t>
+                                                        <t t-elif="not pack[0].product_id.get_product_ref(pack[0].order_partner_id)[0] or pack[0].product_id.default_code == pack[0].product_id.get_product_ref(pack[0].order_partner_id)[0]">
+                                                            <span t-esc="pack[0].product_id.packaging_ids and pack[0].product_id.packaging_ids[0].measures_str or ''"/>
+                                                        </t>
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                            </t>
+                                            <t t-foreach="pack[1]" t-as="move">
+                                                <t t-if="pack[0]">
+                                                    <tr>
+                                                        <td><span t-field="move.product_uom_qty"/></td>
+                                                        <td><span t-field="move.product_id.tech_office_code"/></td>
+                                                        <td><span t-field="move.product_id.default_code"/></td>
+                                                        <td style="border: 1px solid black"></td>
+                                                        <td style="border: 1px solid black"></td>
+                                                        <td>
+                                                            &gt; <span t-esc="move.product_id.name"/>
+                                                        </td>
+                                                        <td>
+                                                            <t t-if="move.product_id.get_product_ref(move.partner_id)[0] and move.product_id.default_code != move.product_id.get_product_ref(move.partner_id)[0]">
+                                                                <span t-esc=" (move.product_id.packaging_ids and move.product_id.packaging_ids[0].measures_str or '') + '   (' + move.product_id.get_product_ref(move.partner_id)[0] + ')'"/>
+                                                            </t>
+                                                            <t t-elif="not move.product_id.get_product_ref(move.partner_id)[0] or move.product_id.default_code == move.product_id.get_product_ref(move.partner_id)[0]">
+                                                                <span t-esc="move.product_id.packaging_ids and move.product_id.packaging_ids[0].measures_str or ''"/>
+                                                            </t>
+                                                        </td>
+                                                        <td><t t-if="move.weight"><span t-field="move.weight"/></t></td>
+                                                    </tr>
+                                                </t>
+                                                <t t-if="not pack[0]">
+                                                    <tr class="pack_component">
+                                                        <td><span t-field="move.product_uom_qty"/></td>
+                                                        <td><span t-field="move.product_id.tech_office_code"/></td>
+                                                        <td><span t-field="move.product_id.default_code"/></td>
+                                                        <td style="border: 1px solid black"></td>
+                                                        <td style="border: 1px solid black"></td>
+                                                        <td>
+                                                            <span t-if="move.move_dest_ids" t-esc="move.move_dest_ids[0].sale_line_id.product_id.name"/><span t-if="move.sale_line_id and not move.move_dest_ids" t-esc="move.sale_line_id.product_id.name"/>
+                                                        </td>
+                                                        <td>
+                                                            <t t-if="move.product_id.get_product_ref(move.partner_id)[0] and move.product_id.default_code != move.product_id.get_product_ref(move.partner_id)[0]">
+                                                                <span t-esc=" (move.product_id.packaging_ids and move.product_id.packaging_ids[0].measures_str or '') + '   (' + move.product_id.get_product_ref(move.partner_id)[0] + ')'"/>
+                                                            </t>
+                                                            <t t-elif="not move.product_id.get_product_ref(move.partner_id)[0] or move.product_id.default_code == move.product_id.get_product_ref(move.partner_id)[0]">
+                                                                <span t-esc="move.product_id.packaging_ids and move.product_id.packaging_ids[0].measures_str or ''"/>
+                                                            </t>
+                                                        </td>
+                                                        <td>
+                                                            <t t-if="move.weight">
+                                                                <span t-field="move.weight"/>
+                                                            </t>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </t>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="row" style="page-break-inside: avoid;">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-3 bordered"><p>Fecha Llamada/MAIL</p></div>
+                                        <div class="col-3 bordered"><p>Contacto TRANSPORTISTA</p></div>
+                                        <div class="col-6 bordered"><p>Comentarios</p></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3 bordered" style="height:100px;"></div>
+                                        <div class="col-3 bordered" style="height:100px;"></div>
+                                        <div class="col-6 bordered" style="height:100px;"><span t-field="o.note"/></div>
+                                    </div>
+                                    <div class="row bordered">
+                                        <div class="col-12">
+                                            <div class="row">TRANSPORTE</div>
+                                            <div class="row">
+                                                <div class="col-2 text-right"><p>Coste transportista</p></div>
+                                                <div class="col-2 input_line  text-left"></div>
+                                                <div class="col-2 text-right"><p>Factura</p></div>
+                                                <div class="col-2 input_line  text-left"></div>
+                                                <div class="col-2 text-right"><p>Factura cliente</p></div>
+                                                <div class="col-2 input_line  text-left"></div>
+                                            </div>
+                                            <div class="row mt8">
+                                                <div class="col-4">
+                                                    <div class="box"/>Presupuesto solicitado
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="box"/>Confirmado Con _____________
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="box"/>Recogida _____________
+                                                </div>
+                                            </div>
+                                            <div class="row mt4">
+                                                <div class="col-8">
+                                                </div>
+                                                <div class="col-4">
+                                                   <div class="box"/>Entrega _____________
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row  bordered">
+                                        <div class="col-6 bordered" style="padding-left: 0px; padding-right: 0px;">
+                                            <div class="col-6" style="display:inline-block; width:50%;">
+                                                <div class="row">
+                                                    <div class="col-12"><p>Redactado por</p></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-12"><div style="height:80px;"></div></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-12"><p>Fecha _____________</p></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6" style="display:inline-block; width: 45%;">
+                                                <div class="row">
+                                                    <div class="col-12"><p>Realizado por</p></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-12"><div style="height:80px;"></div></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-12"><p>Fecha _____________</p></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="row bordered">
+                                                <div class="col-12">
+                                                    <div class="row">
+                                                        <div class="col-12">Comprobado por NOMBRE</div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-6">FIRMA Y FECHA</div>
+                                                        <div class="col-5 text-right">____________________</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row bordered">
+                                                <div class="col-12">
+                                                    <div class="row">
+                                                        <div class="col-5"><div class="box"/>Paquete catálogos</div>
+                                                        <div class="col-3">________</div>
+                                                        <div class="col-4"><div class="box"/>BUNKER</div>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="row">
+                                                        <div class="col-4 offset-8"><div class="box"/>PRODEXTEC</div>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="row">
+                                                        <div class="col-4">¿INCLUIDOS?</div>
+                                                        <div class="col-4">Si / No</div>
+                                                        <div class="col-4"><div class="box"/>ABOUND</div>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="row">
+                                                        <div class="col-4 offset-8"><div class="box"/>KBC</div>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="row">
+                                                        <div class="col-5"><div class="box"/>DATASHEETS</div>
+                                                        <div class="col-4 offset-3"><div class="box"></div>CBIS-CBID</div>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="row">
+                                                        <div class="col-4 offset-8"><div class="box"/>TEMPOS</div>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="row">
+                                                        <div class="col-4 offset-8"><div class="box"/>PDX TRÍPTICO</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+</odoo>

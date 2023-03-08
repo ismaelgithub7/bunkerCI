@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <template id="mrp_production">
+            <t t-call="web.html_container">
+                <t t-call="web.internal_layout">
+                    <div class="page">
+                        <h1>Production Template</h1>
+                        <p>Date: <t t-esc="datetime.date.today()"/></p>
+                        <t t-foreach="docs" t-as="stock_type">
+                            <t t-foreach="docs[stock_type]" t-as="routes">
+                                <strong><t t-esc="stock_type"/> in <t t-esc="routes"/></strong>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th><strong>Category</strong></th>
+                                            <th><strong>Description</strong></th>
+                                            <th><strong>Reference</strong></th>
+                                            <th><strong>Name</strong></th>
+                                            <th><strong>Produce</strong></th>
+                                            <th><strong>URGE</strong></th>
+                                            <th><strong>Produced</strong></th>
+                                            <th><strong>Prepared</strong></th>
+                                            <th><strong>Min</strong></th>
+                                            <th><strong>Available</strong></th>
+                                            <th><strong>Stock</strong></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="docs[stock_type][routes]" t-as="o">
+                                            <tr>
+
+                                                <td><span t-field="o.product_id.categ_id.name"/></td>
+                                                <td><span t-field="o.product_id.name"/></td>
+                                                <td><span t-field="o.product_id.default_code"/></td>
+                                                <td><span t-field="o.name"/></td>
+                                                <td><span t-field="o.product_qty"/></td>
+                                                <td><span t-field="o.product_id.urgent_stock"/></td>
+                                                <td> </td>
+                                                <td> </td>
+                                                <td><span t-field="o.product_id.reordering_min_qty"/></td>
+                                                <td><span t-field="o.product_id.virtual_available"/></td>
+                                                <td><span t-field="o.product_id.qty_available"/></td>
+                                            </tr>
+                                        </t>
+                                        <tr>
+                                            <td colspan="3">TOTAL TO PRODUCE:</td>
+                                            <td>
+                                                <t t-esc="data['totals'][stock_type][routes]"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </t>
+                        </t>
+                        <table class="table">
+                            <t t-foreach="data['totals']['total']" t-as="total_route">
+                                <tr>
+                                    <td>Total to produce in <t t-esc="total_route"/>:
+                                    </td>
+                                    <td>
+                                        <t t-esc="data['totals']['total'][total_route]"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </table>
+
+                        <div style="border: 1px solid black;">
+                            <p>CANTIDAD Minima de producción para arrancar robot: 70</p>
+                            <p>PROMEDIO PRODUCCIÓN ROBOT: 120 columnas día</p>
+                            <p>Producción maxima diaria ROBOT: xxx (aprox)</p>
+                            <p>BAJAR ESTA HOJA DE PRODUCCIÓN a ALMACÉN TODOS LOS VIERNES, LUNES(*) y MIERCOLES(*) Antes de las 13.30</p>
+                            <p>SUBIR ESTA HOJA DE PRODUCCIÓN a O.TECNICA AL TERMINAR LA PRODUCCION SEMANAL**</p>
+                            <p>*= solo si hay necesidad de producción</p>
+                            <p>**= si no diera tiempo realizar toda la producción, subir la hoja al terminar la jornada de producción.</p>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+    <template id="report_mrporder_custom" inherit_id="mrp.report_mrporder">
+        <xpath expr="//table[@t-if='o.move_raw_ids']" position="replace">
+            <table class="table table-sm" t-if="o.move_raw_ids">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="o.move_raw_ids.filtered(lambda x: x.state != 'cancel')" t-as="line">
+                        <tr>
+                            <td>
+                                <span t-field="line.product_id"/>
+                            </td>
+                            <td>
+                                <span t-if="line.state != 'done'" t-field="line.product_uom_qty"/>
+                                <span t-if="line.state == 'done'" t-field="line.quantity_done"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </xpath>
+        <xpath expr="//p[hasclass('fa-exclamation-triangle')]" position="replace"/>
+    </template>
+
+</odoo>

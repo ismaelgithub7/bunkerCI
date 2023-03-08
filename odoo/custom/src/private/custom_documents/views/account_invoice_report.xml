@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="external_layout_standard_custom" inherit_id="web.external_layout_standard">
+        <xpath expr="//div[hasclass('header')]" position="replace">
+            <div class="header" style="font-size: 13px;">
+                <div class="pull-right" style="margin-top:10px;">
+                    <t t-if="title">
+                        <br/>
+                        <div style="padding: 8px; min-height: 120px; min-width: 440px;" class="text-center">
+                            <t t-raw="title"/>
+                        </div>
+                    </t>
+                    <t t-if="address">
+                        <div style="min-height: 130px;margin-left: 160px;max-width: 400px" class="row">
+                            <div style="padding: 4px; text-align: left;">
+                                <t t-raw="address"/>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+                <div class="pull-left" style="margin-top:10px;">
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 150px;"/>
+                    <div style="min-height: 130px;">
+                        <span t-field="company.partner_id"
+                            t-options='{"widget": "contact", "fields": ["name", "address"], "no_marker": true}'/>
+                        Tel: <span t-field="company.phone"/><br/>
+                        <t t-esc="company.country_id.vat_label or 'TIN'"/>: <span t-esc="company.vat.replace(' ','\N{NO-BREAK SPACE}')"/>
+                        <br/><span style="font-size: 10px;">Nº RII_AEE: 7910</span>
+                    </div>
+                </div>
+                <div class="clearfix"/>
+            </div>
+        </xpath>
+        <xpath expr="//div[hasclass('o_report_layout_standard')]" position="attributes">
+            <attribute name="style">font-size: 13px;</attribute>
+        </xpath>
+        <xpath expr="//t[@t-call='web.address_layout']" position="replace"/>
+        <xpath expr="//div[hasclass('footer')]" position="replace">
+            <div class="footer o_standard_footer" style="font-size: 11px;">
+                <t t-if="custom_footer">
+                    <t t-raw="custom_footer"/>
+                </t>
+                <t t-if="not custom_footer">
+                    <div class="text-center" style="border-top: 1px solid black;">
+                        <ul class="list-inline mb4">
+                            <li t-if="company.phone" class="list-inline-item">Phone: <span t-field="company.phone"/></li>
+                            <li t-if="company.email" class="list-inline-item">Email: <span t-field="company.email"/></li>
+                            <li t-if="company.website" class="list-inline-item">Web: <span t-field="company.website"/></li>
+                            <li t-if="company.vat" class="list-inline-item"><t t-esc="(company.country_id.vat_label or 'Tax ID').replace(' ','\N{NO-BREAK SPACE}')"/>: <span t-esc="company.vat.replace(' ','\N{NO-BREAK SPACE}')"/></li>
+                        </ul>
+
+                        <div name="financial_infos">
+                            <span t-field="company.report_footer"/>
+                        </div>
+
+                        <div t-if="report_type == 'pdf'" class="text-muted">
+                            Page: <span class="page"/> / <span class="topage"/>
+                        </div>
+                    </div>
+                </t>
+            </div>
+        </xpath>
+    </template>
+
+        <template id="report_invoice_document_custom" inherit_id="account.report_invoice_document">
+            <xpath expr="//div[hasclass('page')]/h2" position="replace"/>
+            <xpath expr="//t[@t-set='o']" position="after">
+                <t t-set="title">
+                    <h2>
+                        <span t-if="o.type == 'out_invoice' and (o.state not in ['draft', 'cancel'])">Invoice</span>
+                        <span t-if="o.type == 'out_invoice' and o.state == 'draft'">Draft Invoice</span>
+                        <span t-if="o.type == 'out_invoice' and o.state == 'cancel'">Cancelled Invoice</span>
+                        <span t-if="o.type == 'out_refund'">Refund</span>
+                        <span t-if="o.type == 'in_refund'">Supplier Refund</span>
+                        <span t-if="o.type == 'in_invoice'">Supplier Invoice</span>
+                        <span t-field="o.number"/>
+                    </h2>
+                </t>
+                <t t-set="custom_footer">
+                    <div class="text-center" style="border-top: 1px solid black;">
+                        <table class="text-left" style="width:100%;">
+                            <tr t-if="not o.partner_id.country_id.not_show_type_message">
+                                <td style="padding:15px;">
+                                    <p>Type of goods: Security Material // NON DANGEROUS MATERIAL // Origin of goods: SPAIN.</p>
+                                    <p>Total Amount due (Please take note of the fact that we do not assume the charge for bank transfer)</p>
+                                    <t t-if="o.partner_id.country_id.invoice_report_with_validation_data">
+                                        <p>The exporter of the products covered by this document declares that, except where otherwise clearly indicated, these products are of E.U. preferential origin.</p>
+                                    </t>
+                                    <t t-if="not o.partner_id.country_id.invoice_report_with_validation_data">
+                                        <p>The exporter of the products covered by this document (CUSTOMS AUTHORIZATION Nº ES/62/8517/12) declares that except where otherwise clearly indicated these products are of Spanish preferential origin.</p>
+                                    </t>
+                                </td>
+                            </tr>
+
+                            <tr style="border: 1px solid black;">
+                                <td style="padding:15px;">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h5><strong>OPERATION INSURED BY CREDITO Y CAUCIÓN</strong></h5>
+                                        </div>
+                                    </div>
+                                    <div class="row" t-if="o.payment_term_id">
+                                        <div class="col-2">
+                                            Payment terms
+                                        </div>
+                                        <div class="col-10" style="margin-bottom:5px;">
+                                            <span t-field="o.payment_term_id.name"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <t t-if="o.payment_mode_id.fixed_journal_id">
+                                                <t t-set="bank" t-value="o.payment_mode_id.fixed_journal_id.bank_account_id"/>
+                                                <div class="row">
+                                                    <div class="col-2">Bank details</div>
+                                                    <div class="col-10">
+                                                        <span t-field="bank.bank_name"/>,
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-10 offset-2">
+                                                        <p><span t-field="bank.bank_id.street"/> <span t-field="bank.bank_id.street2"/>, <span t-field="bank.bank_id.zip"/>, <span t-field="bank.bank_id.city"/>, <span t-field="bank.bank_id.state"/>, <span t-field="bank.bank_id.country"/></p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-9">
+                                                        <p><span t-field="bank.currency_id.symbol"/> Account: <span t-field="bank.acc_number"/> SWIFT Code <span t-field="bank.bank_bic"/></p>
+                                                    </div>
+                                                    <div t-if="report_type == 'pdf'">
+                                                        Page: <span class="page"/>/<span class="topage"/>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr t-if="o.company_id.report_footer">
+                                <td class="text-center"><p t-field="o.company_id.report_footer"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </xpath>
+            <xpath expr="//div[@t-if='o.partner_id.vat']" position="attributes">
+                <attribute name="class"></attribute>
+            </xpath>
+            <xpath expr="//p[@name='payment_term']" position="replace"/>
+            <xpath expr="//p[@t-if='o.reference']" position="replace"/>
+            <xpath expr="//table[@name='invoice_line_table']/thead/tr/th[6]" position="replace"/>
+            <xpath expr="//table[@name='invoice_line_table']//t[@t-as='line']/tr/t/td[6]" position="replace"/>
+            <xpath expr="//p[@name='note']" position="after">
+                <div class="row" t-if="o.partner_id.country_id.invoice_report_with_shipping_address and o.partner_shipping_id">
+                    <div class="col-6">
+                        <div style="border: 1px solid black">
+                            <p>Delivery address</p>
+                            <div t-field="o.partner_shipping_id"
+                            t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div class="row" t-if="o.partner_id.country_id.invoice_report_with_validation_data and o.validated_by">
+                    <div class="col-6">
+                        <div style="border: 1px solid black; padding-left:6%; padding-top:3%;">
+                            <p>Date: <span t-field="o.validation_date"/></p>
+                            <p>Place: <span t-field="o.validated_by.company_id.city"/> , <span t-field="o.validated_by.company_id.country_id.name"/></p>
+                            <p><span t-esc="o.validated_by.employee_ids[0].name"/> - <span t-esc="o.validated_by.employee_ids[0].department_id.name"/></p>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+            <xpath expr="//span[@t-field='line.name']" position="replace">
+                <span t-if="line.product_id.hs_code_id and o.partner_id.country_id.show_intrastat">
+                    <span t-field="line.name" />
+                    <br />
+                    <strong>HS Code:</strong>
+                    <span t-field="line.product_id.hs_code_id.local_code" />
+                </span>
+                <span t-if="not line.product_id.hs_code_id or not o.partner_id.country_id.show_intrastat">
+                    <span t-field="line.name" />
+                </span>
+            </xpath>
+            <xpath expr="//div[@name='reference']" position="replace"/>
+        </template>
+
+        <template id="report_invoice_payment_mode_replace" inherit_id="account_payment_partner.report_invoice_payment_mode">
+            <xpath expr="//p[@t-if='o.payment_mode_id.note']" position="replace"/>
+            <xpath expr="//p[@t-as='partner_bank']/.." position="replace"/>
+        </template>
+
+</odoo>

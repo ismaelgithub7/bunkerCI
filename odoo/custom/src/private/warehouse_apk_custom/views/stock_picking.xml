@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="vpicktree_apk" model="ir.ui.view">
+            <field name="name">vpicktree.apk</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.vpicktree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='state']" position="before">
+                    <field name="app_integrated" invisible="1"/>
+                </xpath>
+            </field>
+     </record>
+    <record id="view_picking_form_apk" model="ir.ui.view">
+            <field name="name">view_picking_form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='picking_type_code']" position="after">
+                    <field name="app_integrated" invisible="1" readonly="1"/>
+                </xpath>
+
+            </field>
+     </record>
+
+
+
+<record id="auto_assignt_batch_id" model="ir.actions.server">
+        <field name="name">Enviar a PDA</field>
+        <field name="model_id" ref="stock.model_stock_picking"/>
+        <field name="binding_model_id" ref="stock.model_stock_picking"/>
+        <field name="state">code</field>
+        <field name="code">
+            for pick in records:
+            pick.action_auto_assign_batch_id()
+        </field>
+    </record>
+     <record id="view_picking_form_wac" model="ir.ui.view">
+        <field name="name">stock.picking.inherit.view.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='move_ids_without_package']/tree/field[@name='state']" position="after">
+                <field name="view_move_fields"/>
+                <field name="wh_location"/>
+                <!--field name="apk_order" string="Orden"/-->
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

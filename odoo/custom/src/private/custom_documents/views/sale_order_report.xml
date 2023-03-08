@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_saleorder_document" inherit_id="account_payment_sale.report_sale_payment_mode">
+        <xpath expr="//h2" position="replace"/>
+        <xpath expr="//t[@t-set='doc']" position="after">
+            <t t-set="title">
+                <h2>
+                    PROFORMA INVOICE
+                </h2>
+            </t>
+            <t t-set="custom_footer">
+                <div class="text-center" style="border-top: 1px solid black;">
+                    <table class="text-left" style="border: 1px solid black; width:100%;">
+                        <tr t-if="not doc.partner_id.country_id.not_show_type_message">
+                            <td style="padding:15px;">
+                                <p>Type of goods: Security Material // NON DANGEROUS MATERIAL // Origin of goods: SPAIN.</p>
+                                <p>Total Amount due (Please take note of the fact that we do not assume the charge for bank transfer)</p>
+                                <t t-if="doc.partner_id.country_id.invoice_report_with_validation_data">
+                                    <p>The exporter of the products covered by this document declares that, except where otherwise clearly indicated, these products are of E.U. preferential origin.</p>
+                                </t>
+                                <t t-if="not doc.partner_id.country_id.invoice_report_with_validation_data">
+                                    <p>The exporter of the products covered by this document (custom authorization) ES/62/8517/12 declares that except where otherwise clearly indicated these products are of Spanish preferential origin.</p>
+                                </t>
+                            </td>
+                        </tr>
+
+                        <tr style="border: 1px solid black;">
+                            <td style="padding:15px;">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h4><strong>OPERATION INSURED BY CREDITO Y CAUCIÓN</strong></h4>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-2">
+                                        Payment terms
+                                    </div>
+                                    <div class="col-10" style="margin-bottom:5px;">
+                                        <t t-if="doc.payment_term_id">
+                                            <span t-field="doc.payment_term_id.name"/>
+                                        </t>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <t t-if="doc.payment_mode_id.fixed_journal_id">
+                                            <t t-set="bank" t-value="doc.payment_mode_id.fixed_journal_id.bank_account_id"/>
+                                            <div class="row">
+                                                <div class="col-2">Bank details</div>
+                                                <div class="col-10">
+                                                    <span t-field="bank.bank_name"/>,
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-10 offset-2">
+                                                    <p><span t-field="bank.bank_id.street"/> <span t-field="bank.bank_id.street2"/>, <span t-field="bank.bank_id.zip"/>, <span t-field="bank.bank_id.city"/>, <span t-field="bank.bank_id.state"/>, <span t-field="bank.bank_id.country"/></p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-9">
+                                                    <p><span t-field="bank.currency_id.symbol"/> Account: <span t-field="bank.acc_number"/> SWIFT Code <span t-field="bank.bank_bic"/></p>
+                                                </div>
+                                                <div class="col-3 text-right" t-if="report_type == 'pdf'">
+                                                    Page: <span class="page"/>/<span class="topage"/>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </xpath>
+        <xpath expr="//div[@t-if='doc.user_id.name']" position="after">
+            <div class="col-auto mw-100 mb-2">
+                <strong>Proforma invoice:</strong>
+                <p class="m-0" t-field="doc.name"/>
+            </div>
+        </xpath>
+        <xpath expr="//p[@t-if='doc.payment_term_id.note']" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+        <xpath expr="//p[@t-if='doc.payment_mode_id.note']" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+        <xpath expr="//div[@name='payment_term']" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+    </template>
+
+</odoo>

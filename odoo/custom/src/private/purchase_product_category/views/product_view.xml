@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="product_template_add_material_category" model="ir.ui.view">
+            <field name="name">product.template.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="account.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <field name="categ_id" position="after">
+                    <field name="material_categ_id"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="product_template_add_material_cat_search_view" model="ir.ui.view">
+            <field name="name">product.template.search</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_search_view"/>
+            <field name="arch" type="xml">
+                <field name="categ_id" position="after">
+                    <field name="material_categ_id"/>
+                </field>
+            </field>
+        </record>
+
+
+        <!-- Material categories views. -->
+        <record id="material_category_search" model="ir.ui.view">
+            <field name="name">material.category.search</field>
+            <field name="model">product.material.category</field>
+            <field name="arch" type="xml">
+                <search string="Product Categories">
+                    <field name="name" string="Product Categories"/>
+                    <field name="parent_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="material_category_tree" model="ir.ui.view">
+            <field name="name">material.category.tree</field>
+            <field name="model">product.material.category</field>
+            <field name="arch" type="xml">
+                <tree string="Material categories">
+                    <field name="display_name" string="Product Category"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="material_category_form" model="ir.ui.view">
+            <field name="name">material.category.form</field>
+            <field name="model">product.material.category</field>
+            <field name="arch" type="xml">
+                <form class="oe_form_configuration">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button"
+                                name="%(product.product_template_action_all)d"
+                                icon="fa-th-list"
+                                type="action"
+                                context="{'search_default_material_categ_id': active_id}">
+                                <div class="o_field_widget o_stat_info">
+                                    <span class="o_stat_text"> Products</span>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <label for="name" string="Category name" class="oe_edit_only"/>
+                            <h1><field name="name" placeholder="e.g. Lamps"/></h1>
+                        </div>
+                        <group name="first" col="2">
+                            <field name="parent_id" class="oe_inline"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    <record id="product_material_category_action_form" model="ir.actions.act_window">
+        <field name="name">Product Material Categories</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.material.category</field>
+        <field name="view_type">form</field>
+        <field name="search_view_id" ref="material_category_search"/>
+        <field name="view_id" ref="material_category_tree"/>
+    </record>
+
+    <menuitem
+            action="product_material_category_action_form" id="menu_product_category_config_purchase"
+            parent="purchase.menu_product_in_config_purchase" sequence="1" />
+
+</odoo>

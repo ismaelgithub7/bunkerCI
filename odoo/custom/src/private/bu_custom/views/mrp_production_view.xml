@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="mrp_production_form_view" model="ir.ui.view">
+            <field name="name">mrp.production.form</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='open_produce_product'][1]" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', '|', '|', ('is_locked', '=', False), ('check_to_done', '=', True), ('availability', 'not in', ['partially_available', 'assigned']), ('state', 'not in', ('confirmed','progress'))]}</attribute>
+                </xpath>
+                <xpath expr="//button[@name='open_produce_product'][2]" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', '|', '|', ('is_locked', '=', False), ('check_to_done', '=', True), ('availability', '!=', 'waiting'), ('state', 'not in', ('confirmed','progress'))]}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

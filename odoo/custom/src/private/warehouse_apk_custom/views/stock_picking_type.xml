@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+ <record model="ir.ui.view" id="view_picking_type_form">
+            <field name="name">Operation Types Codes</field>
+            <field name="model">picking.type.group.code</field>
+            <field name="inherit_id" ref="stock_picking_type_group.view_picking_type_form"/>
+            <field name="arch" type="xml">
+                 <field name="default" position="after">
+                     <field name="app_integrated"/>
+                     <field name="allow_overprocess"/>
+                 </field>
+                <xpath expr="//group[@name='base_erp']" position="after">
+                        <group string="APP" attrs="{'invisible': [('app_integrated', '=', False)]}">
+                            <group>
+                                <field name="default_location"/>
+                                <field name="icon"/>
+                            </group>
+                            <group>
+                                <field name="required_move_fields"/>
+                                <field name="view_move_fields"/>
+                            </group>
+                        </group>
+                </xpath>
+            </field>
+    </record>
+     <record id="view_picking_type_form_wap" model="ir.ui.view">
+            <field name="name">Operation Types</field>
+            <field name="model">stock.picking.type</field>
+            <field name="inherit_id" ref="stock.view_picking_type_form"/>
+            <field name="arch" type="xml">
+                <field name="warehouse_id" position="after">
+                    <field name="app_integrated"/>
+                </field>
+                <field name="show_operations" position="after">
+                    <field name="default_location" attrs="{'invisible': [('app_integrated', '=', False)]}"/>
+                </field>
+            </field>
+        </record>
+    <record id="stock_picking_type_kanban_apk" model="ir.ui.view">
+            <field name="name">stock.picking.type.kanban.apk</field>
+            <field name="model">stock.picking.type</field>
+            <field name="inherit_id" ref="stock.stock_picking_type_kanban"/>
+            <field name="arch" type="xml">
+                <field name="count_picking_ready" position="after">
+                    <field name="count_picking_batch_ready"/>
+                    <field name="app_integrated"/>
+                </field>
+                <xpath expr="//div/button[@name='get_action_picking_tree_ready']" position="after">
+                    <hr/>
+                    <div t-if="record.app_integrated" class="col-6 o_kanban_primary_left">
+
+                        <button class="btn btn-primary" name="get_action_picking_batch_tree_ready" type="object">
+                            <span><t t-esc="record.count_picking_batch_ready.value"/> To Pda</span>
+
+                        </button>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+</odoo>

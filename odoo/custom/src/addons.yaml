@@ -1,0 +1,66 @@
+reporting-engine:
+- "*"
+l10n-spain:
+- "*"
+bank-statement-import:
+- "*"
+partner-contact:
+- "*"
+server-tools:
+- "*"
+server-ux:
+- "*"
+bank-payment:
+- "*"
+account-payment:
+- "*"
+account-financial-reporting:
+- "*"
+account-financial-tools:
+- "*"
+web:
+- "*"
+commission:
+- "*"
+credit-control:
+- "*"
+account-invoicing:
+- "*"
+purchase-workflow:
+- "*"
+sale-workflow:
+- "*"
+bank-statement-reconcile:
+- "*"
+product-attribute:
+- "*"
+stock-logistics-warehouse:
+- "*"
+stock-logistics-workflow:
+- "*"
+social:
+- "*"
+community-data-files:
+- "*"
+crm:
+- "*"
+manufacture:
+- "*"
+server-auth:
+- "*"
+intrastat:
+- "*"
+account-invoice-reporting:
+- "*"
+mis-builder:
+- "*"
+currency:
+- "*"
+delivery-carrier:
+- "*"
+stock-logistics-transport:
+- "*"
+stock-logistics-barcode:
+- "*"
+stock-logistics-reporting:
+- "*"
