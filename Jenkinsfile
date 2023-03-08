@@ -7,5 +7,11 @@ pipeline {
       }
     }
 
+    stage('ip a') {
+      steps {
+        sh 'ip a'
+      }
+    }
+
   }
 }
