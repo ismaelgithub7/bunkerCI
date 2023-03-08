@@ -10,7 +10,13 @@ pipeline {
 
     stage('git-aggregate') {
       steps {
-        sh 'invoke git-aggergate'
+        sh 'invoke start'
+      }
+    }
+
+    stage('') {
+      steps {
+        sh 'invoke stop'
       }
     }
 
