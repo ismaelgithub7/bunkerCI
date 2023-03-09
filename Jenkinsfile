@@ -9,7 +9,7 @@ pipeline {
 
     stage('CD') {
       steps {
-        sh '''cd /op/docker/bunkerCI
+        sh '''cd /opt/docker/bunkerCI
 docker-compose up -d'''
       }
     }
