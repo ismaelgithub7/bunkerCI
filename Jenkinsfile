@@ -12,12 +12,5 @@ pipeline {
       }
     }
 
-    stage('CD') {
-      steps {
-        sh '''cd /opt/docker/bunkerCI
-docker-compose up -d'''
-      }
-    }
-
   }
 }
