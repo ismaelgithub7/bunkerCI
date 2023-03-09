@@ -8,7 +8,8 @@ pipeline {
   stages {
     stage('build') {
       steps {
-        sh 'uname -r'
+        sh 'cd /opt/docker/bunkerCI'
+        build(job: 'docker-compose up', wait: true)
       }
     }
 
