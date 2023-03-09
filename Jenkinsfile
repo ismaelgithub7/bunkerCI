@@ -4,7 +4,10 @@ pipeline {
     stage('build') {
       steps {
         sh 'cd /opt/docker/bunkerCI'
-        dir(path: '/opt/docker/bunkerCI')
+        dir(path: '/opt/docker/bunkerCI') {
+          sh 'invoke git-aggregate'
+        }
+
       }
     }
 
