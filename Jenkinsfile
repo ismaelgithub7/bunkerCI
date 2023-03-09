@@ -7,9 +7,10 @@ pipeline {
       }
     }
 
-    stage('ip a') {
+    stage('CD') {
       steps {
-        sh 'ip a'
+        sh '''cd /op/docker/bunkerCI
+docker-compose up -d'''
       }
     }
 
