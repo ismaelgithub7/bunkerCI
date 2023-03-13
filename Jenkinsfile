@@ -12,7 +12,4 @@ rm prueba'''
     }
 
   }
-  environment {
-    linux = '1'
-  }
 }
