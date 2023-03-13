@@ -3,9 +3,12 @@ pipeline {
   stages {
     stage('prueba') {
       steps {
-        sh '''ls
-touch prueba
-ls'''
+        sh '''cd /opt/docker/bunkerCI
+ls
+rm docker-compose.yml
+cp devel.yaml docker-compose.yml
+ls -lh
+'''
       }
     }
 
