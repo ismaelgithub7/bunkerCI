@@ -4,7 +4,8 @@ pipeline {
     stage('prueba') {
       steps {
         sh '''ls
-touch prueba'''
+touch prueba
+ls'''
       }
     }
 
