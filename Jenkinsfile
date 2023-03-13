@@ -7,7 +7,7 @@ pipeline {
 ls
 rm docker-compose.yml
 cp devel.yaml docker-compose.yml
-ls -lh
+ls
 '''
       }
     }
