@@ -3,7 +3,11 @@ pipeline {
   stages {
     stage('error') {
       steps {
-        sh 'echo "hola"'
+        sh '''cd /opt/docker/bunkerCI
+ls -lh
+touch prueba
+ls
+rm prueba'''
       }
     }
 
